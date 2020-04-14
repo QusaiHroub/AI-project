@@ -19,7 +19,7 @@ class MapLevel99Plus {
 private:
     const unsigned long long PRIME = 261798184036870849ll;
 
-    BSTNode *m_root;
+    BSTNode *m_root = nullptr;
 
     void clear(BSTNode *);
     Particle *getAt(BSTNode *, long double);
@@ -29,9 +29,9 @@ public:
     MapLevel99Plus();
     ~MapLevel99Plus();
 
-    void inseart(BSTNode *, Particle *, BSTNode * = nullptr);
+    void inseart(BSTNode **, Particle *, BSTNode * = nullptr);
     void inseart(Particle *);
-    void buildForVector(BSTNode *, std::vector<Particle> &, int, int, BSTNode * = nullptr);
+    void buildForVector(BSTNode **, std::vector<Particle> &, int, int, BSTNode * = nullptr);
     void buildForVector(std::vector<Particle> &, void (*) (std::vector<Particle>::iterator, std::vector<Particle>::iterator) = nullptr);
     void clear();
 

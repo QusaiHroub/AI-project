@@ -8,28 +8,28 @@ MapLevel99Plus::~MapLevel99Plus() {
     clear();
 }
 
-void MapLevel99Plus::inseart(BSTNode *root, Particle *particle, BSTNode *parent) {
-    if (root == nullptr) {
-        root = new BSTNode;
-        root->particle = particle;
-        root->left = nullptr;
-        root->right = nullptr;
-        root->parent = parent;
+void MapLevel99Plus::inseart(BSTNode **root, Particle *particle, BSTNode *parent) {
+    if (*root == nullptr) {
+        (*root) = new BSTNode;
+        (*root)->particle = particle;
+        (*root)->left = nullptr;
+        (*root)->right = nullptr;
+        (*root)->parent = parent;
         return;
     }
 
-    if (particle->getH() < root->particle->getH()) {
-        inseart(root->left, particle, root);
+    if (particle->getH() < (*root)->particle->getH()) {
+        inseart(&(*root)->left, particle, *root);
     } else {
-        inseart(root->right, particle, root);
+        inseart(&(*root)->right, particle, *root);
     }
 }
 
 void MapLevel99Plus::inseart(Particle *particle) {
-    inseart(m_root, particle);
+    inseart(&m_root, particle);
 }
 
-void MapLevel99Plus::buildForVector(BSTNode *root, std::vector<Particle> &list, int low, int high, BSTNode *parent) {
+void MapLevel99Plus::buildForVector(BSTNode **root, std::vector<Particle> &list, int low, int high, BSTNode *parent) {
     if (low > high) {
         return;
     }
@@ -38,8 +38,8 @@ void MapLevel99Plus::buildForVector(BSTNode *root, std::vector<Particle> &list, 
 
     inseart(root, &list[mid], parent);
 
-    buildForVector(root->left, list, low, mid  - 1, root);
-    buildForVector(root->right, list, mid + 1, high, root);
+    buildForVector(&(*root)->left, list, low, mid - 1, *root);
+    buildForVector(&(*root)->right, list, mid + 1, high, *root);
 }
 
 void MapLevel99Plus::buildForVector(std::vector<Particle> &list, void (*sort) (std::vector<Particle>::iterator, std::vector<Particle>::iterator)) {
@@ -49,7 +49,7 @@ void MapLevel99Plus::buildForVector(std::vector<Particle> &list, void (*sort) (s
 
     initLAndHForParticlesInVector(list);
 
-    buildForVector(m_root, list, 0, list.size() - 1);
+    buildForVector(&m_root, list, 0, list.size() - 1);
 }
 
 void MapLevel99Plus::clear(BSTNode *root) {
