@@ -68,7 +68,7 @@ void MapLevel99Plus::clear() {
 Particle *MapLevel99Plus::getAt(BSTNode *root, long double p) {
     if (p > root->particle->getH()) {
         return getAt(root->right, p);
-    } else if (p > root->particle->getL()) {
+    } else if (p < root->particle->getL()) {
         return getAt(root->left, p);
     }
     return root->particle;
