@@ -9,17 +9,19 @@ public:
     Particle(long double, int);
     Particle(Particle *);
 
-    long double getWeight();
+    long double getWeight() const;
     void setWeight(long double);
-    int getPosition();
+    int getPosition() const;
     void setPosition(int);
-    long double getL();
+    long double getL() const;
     void setL(long double);
-    long double getH();
+    long double getH() const;
     void setH(long double);
 
+    Particle &operator=(const Particle &);
+
 private:
-    const long double MIN_Weight = 1.0l / 1e20;
+    const long double MIN_WEIGHT = 1e-20l;
     long double m_weight;
     int m_position;
 
