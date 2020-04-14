@@ -81,8 +81,6 @@ Particle &MapLevel99Plus::operator[](long double p) {
 }
 
 BSTNode::~BSTNode() {
-    delete right;
-    delete left;
-    delete parent;
+
 }
 
