@@ -29,7 +29,7 @@ void MapLevel99Plus::inseart(Particle *particle) {
     inseart(m_root, particle);
 }
 
-void MapLevel99Plus::buildForVector(BSTNode *root, std::vector<Particle> list, int low, int high, BSTNode *parent) {
+void MapLevel99Plus::buildForVector(BSTNode *root, std::vector<Particle> &list, int low, int high, BSTNode *parent) {
     if (low > high) {
         return;
     }
@@ -42,10 +42,12 @@ void MapLevel99Plus::buildForVector(BSTNode *root, std::vector<Particle> list, i
     buildForVector(root->right, list, mid + 1, high, root);
 }
 
-void MapLevel99Plus::buildForVector(std::vector<Particle> list, void (*sort) (std::vector<Particle>::iterator, std::vector<Particle>::iterator)) {
+void MapLevel99Plus::buildForVector(std::vector<Particle> &list, void (*sort) (std::vector<Particle>::iterator, std::vector<Particle>::iterator)) {
     if (sort != nullptr) {
         sort(list.begin(), list.end());
     }
+
+    initLAndHForParticlesInVector(list);
 
     buildForVector(m_root, list, 0, list.size() - 1);
 }
@@ -80,7 +82,15 @@ Particle &MapLevel99Plus::operator[](long double p) {
     return (*(getAt(p)));
 }
 
+void MapLevel99Plus::initLAndHForParticlesInVector(std::vector<Particle> &list) {
+    long double prevPoint = 0.0l;
+    for (unsigned long i = 0; i < list.size(); i++) {
+        list[i].setL(prevPoint);
+        prevPoint += list[i].getWeight() * PRIME;
+        list[i].setH(prevPoint);
+    }
+}
+
 BSTNode::~BSTNode() {
 
 }
-
