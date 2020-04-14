@@ -9,6 +9,11 @@ Particle::Particle(long double weight, int position) {
     setPosition(position);
 }
 
+Particle::Particle(Particle *particle) {
+    setWeight(particle->getWeight());
+    setPosition(particle->getPosition());
+}
+
 long double Particle::getWeight() {
     return m_weight;
 }
