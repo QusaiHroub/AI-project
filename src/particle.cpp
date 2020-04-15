@@ -9,9 +9,19 @@ Particle::Particle(long double weight, int position) {
     setPosition(position);
 }
 
-Particle::Particle(Particle *particle) {
+Particle::Particle(const Particle *particle) {
+    if (particle == nullptr) {
+        return;
+    }
+
     setWeight(particle->getWeight());
     setPosition(particle->getPosition());
+    setH(particle->getH());
+    setL(particle->getL());
+}
+
+Particle::Particle(const Particle &particle) : Particle(&particle) {
+
 }
 
 long double Particle::getWeight() const {

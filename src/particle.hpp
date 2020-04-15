@@ -7,7 +7,8 @@ class Particle
 public:
     Particle();
     Particle(long double, int);
-    Particle(Particle *);
+    Particle(const Particle *);
+    Particle(const Particle &);
 
     long double getWeight() const;
     void setWeight(long double);
