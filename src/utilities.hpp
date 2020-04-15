@@ -8,6 +8,8 @@
 #include "particle.hpp"
 #include "maplevel99plus.hpp"
 
+namespace utilities {
+
 const unsigned long long PRIME = 261798184036870849ll;
 
 unsigned long long uRand() {
@@ -26,6 +28,8 @@ Particle &getRandomParticle(MapLevel99Plus &map) {
     long double randomNumber = uRandMod(PRIME);
 
     return map[randomNumber];
+}
+
 }
 
 #endif // UTILITIES_HPP
