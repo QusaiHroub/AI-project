@@ -10,12 +10,20 @@
 
 const unsigned long long PRIME = 261798184036870849ll;
 
-Particle &getRandomParticle(MapLevel99Plus &map) {
+unsigned long long uRand() {
     std::random_device rd;
     std::mt19937_64 eng(rd());
     std::uniform_int_distribution<unsigned long long> distr;
 
-    long double randomNumber =  distr(eng) % PRIME;
+    return distr(eng);
+}
+
+unsigned long long uRandMod(unsigned long long mod) {
+    return uRand() % mod;
+}
+
+Particle &getRandomParticle(MapLevel99Plus &map) {
+    long double randomNumber = uRandMod(PRIME);
 
     return map[randomNumber];
 }
