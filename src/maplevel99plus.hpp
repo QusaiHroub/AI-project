@@ -32,7 +32,7 @@ public:
     void inseart(BSTNode **, Particle *, BSTNode * = nullptr);
     void inseart(Particle *);
     void buildForVector(BSTNode **, std::vector<Particle> &, int, int, BSTNode * = nullptr);
-    void buildForVector(std::vector<Particle> &, void (*) (std::vector<Particle>::iterator, std::vector<Particle>::iterator) = nullptr);
+    void buildForVector(std::vector<Particle> &);
     void clear();
 
     Particle *getAt(long double);

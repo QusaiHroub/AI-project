@@ -42,11 +42,7 @@ void MapLevel99Plus::buildForVector(BSTNode **root, std::vector<Particle> &list,
     buildForVector(&(*root)->right, list, mid + 1, high, *root);
 }
 
-void MapLevel99Plus::buildForVector(std::vector<Particle> &list, void (*sort) (std::vector<Particle>::iterator, std::vector<Particle>::iterator)) {
-    if (sort != nullptr) {
-        sort(list.begin(), list.end());
-    }
-
+void MapLevel99Plus::buildForVector(std::vector<Particle> &list) {
     initLAndHForParticlesInVector(list);
 
     buildForVector(&m_root, list, 0, list.size() - 1);
