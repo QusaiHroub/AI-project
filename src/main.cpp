@@ -40,8 +40,9 @@ int main() {
 		cout << "Robot position : " << currentPosition << endl;
 		cout << "Mean : " << sum / particlesList.size() << endl;
 		cout << "Variance : " << abs(currentPosition - (sum / particlesList.size())) << endl;
-		currentPosition += step;//need random error
 		Particle_filter(particlesList, step, arr[currentPosition], avg, standardDeviation, currentPosition, arr);//need random error arr[currentPosition]
+		currentPosition += step;//need random error
+
 	}
 
 	return 0;
