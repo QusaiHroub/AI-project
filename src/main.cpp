@@ -60,7 +60,7 @@ int main() {
 		cout << "Robot position : " << currentPosition << endl;
 		cout << "Mean : " << sum / v.size() << endl;
 		currentPosition += step;//need random error
-		v = Particle_filter(v, 10, arr[currentPosition], avg, standardDeviation, currentPosition, arr);//need random error arr[currentPosition]
+		v = Particle_filter(v, step, arr[currentPosition], avg, standardDeviation, currentPosition, arr);//need random error arr[currentPosition]
 	}
 
 	return 0;

@@ -31,7 +31,7 @@ std::vector<Particle> Particle_filter(std::vector<Particle>v, int U, double Z, d
 	for (int i = 0; i < v.size(); i++) {
 		Particle randomParticle = Particle(&getRandomParticle(map));
 		if (randomParticle.getPosition() + U >= 1000)
-			randomParticle.setPosition(rand() % (1000));
+			randomParticle.setPosition((rand() % (1000- currentPosition))+ currentPosition);
 		else
 			randomParticle.setPosition(randomParticle.getPosition() + U);
 		double weightParicle = weight(Z - arr[randomParticle.getPosition()], avg, standardDeviation);
