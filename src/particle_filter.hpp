@@ -9,7 +9,7 @@
 #include "utilities.hpp"
 
  void Particle_filter(std::vector<Particle>& particlesList, int U, double Z, double avg, double standardDeviation, int mean, double arr[]) {
-	mean *= 2;
+	mean -= 1000 - mean;
 	std::vector<Particle> newS;
 	MapLevel99Plus map;
 	map.buildForVector(particlesList);
