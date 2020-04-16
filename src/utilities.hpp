@@ -8,16 +8,21 @@
 #include "particle.hpp"
 #include "maplevel99plus.hpp"
 
-const unsigned long long PRIME = 261798184036870849ll;
+namespace utilities {
 
-Particle &getRandomParticle(MapLevel99Plus &map) {
-    std::random_device rd;
-    std::mt19937_64 eng(rd());
-    std::uniform_int_distribution<unsigned long long> distr;
+    const unsigned long long PRIME = 261798184036870849ll;
+    const double PI = 3.14159265;
 
-    long double randomNumber =  distr(eng) % PRIME;
-
-    return map[randomNumber];
+    unsigned long long rand();
+    unsigned long long randMod(unsigned long long mod);
+    Particle& getRandomParticle(MapLevel99Plus& map);
+    double weight(double x, double u, double q);
+    Particle normalize(Particle p, double w);
+    void getRandomParticles(std::vector<Particle>& particlesList, double arr[], int currentPosition, double avg, double standardDeviation, int numberOfParticles);
+    double getTempForAllPositions(double* arr);
+    double getStandardDeviation(double arr[], double avg);
+    double smallRnadomError(int, double = 1.0);
+   	double Variance(double mean, std::vector<Particle> particlesList);
 }
 
 #endif // UTILITIES_HPP
