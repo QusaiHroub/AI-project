@@ -9,9 +9,8 @@
 using namespace std;
 
 int main() {
-	vector<Particle> particlesList;//our particle
+	vector<Particle> particlesList;//our particles
 	double arr[1000];
-	const double pi = 3.14159265;
 
 	int start , step;
 	cout << "Enter the start point of rebot : ";
@@ -31,7 +30,7 @@ int main() {
 	double sum;
 	while (currentPosition < 1000) {
 		sum = 0;
-		for (int i = 0; i < particlesList.size(); i++)
+		for (unsigned long i = 0; i < particlesList.size(); i++)
 		{
 			cout << "Particle number " << i << " in position : " << particlesList[i].getPosition() << endl;
 			sum += particlesList[i].getPosition();

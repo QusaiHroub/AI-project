@@ -13,7 +13,6 @@ namespace utilities {
 	const unsigned long long PRIME = 261798184036870849ll;
 	const double PI = 3.14159265;
 
-
 	unsigned long long rand() {
 		std::random_device rd;
 		std::mt19937_64 eng(rd());
@@ -32,12 +31,13 @@ namespace utilities {
 		return map[randomNumber];
 	}
 
-
 	/**
-	To calculate the weights using gaussian formula */
+	To calculate the weights using gaussian formula 
+	*/
 	double weight(double x, double u, double q) {
 		return ((1 / (q * sqrt(2 * PI))) * exp(-1 * pow((x - u), 2) / 2 * pow(q, 2)));
 	}
+	
 	/*
 	To normalize the weights
 	**/
@@ -59,7 +59,7 @@ namespace utilities {
 			particlesList.push_back(particle);
 			pos++;
 		}
-		for (int i = 0; i < particlesList.size(); i++)
+		for (unsigned long i = 0; i < particlesList.size(); i++)
 			particlesList[i] = normalize(particlesList[i], weightSum);
 
 	}
