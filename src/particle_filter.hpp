@@ -8,7 +8,7 @@
 #include "maplevel99plus.hpp"
 #include "utilities.hpp"
 
- void Particle_filter(std::vector<Particle>& particlesList, int U, double Z, double avg, double standardDeviation, int currentPosition, double arr[]) {
+ void Particle_filter(std::vector<Particle>& particlesList, int U, double Z, double avg, double standardDeviation, int mean, double arr[]) {
 	std::vector<Particle> newS;
 	MapLevel99Plus map;
 	map.buildForVector(particlesList);
@@ -16,7 +16,7 @@
 	for (unsigned long i = 0; i < particlesList.size(); i++) {
 		Particle randomParticle = Particle(&utilities::getRandomParticle(map));
 		if (randomParticle.getPosition() + U >= 1000)
-			randomParticle.setPosition((rand() % (1000- currentPosition))+ currentPosition);
+			randomParticle.setPosition((rand() % (1000 - mean)) + mean);
 		else
 			randomParticle.setPosition(randomParticle.getPosition() + U);
 		double weightParicle = utilities::weight(Z - arr[randomParticle.getPosition()], avg, standardDeviation);
