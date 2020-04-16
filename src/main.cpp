@@ -14,6 +14,7 @@ int main() {
 	vector<Particle> particlesList;//our particles
 	double arr[1000] = {};
 	double avg = utilities::getTempForAllPositions(arr);
+	double mean;
 	
 	HeatSensor heatSensor(arr, 1000);
 	
@@ -39,11 +40,13 @@ int main() {
 			cout << "Particle number " << i << " in position : " << particlesList[i].getPosition() << endl;
 			sum += particlesList[i].getPosition();
 		}
+		
+		mean = sum / particlesList.size();
 		nextStep = stepSize * utilities::smallRnadomError(3, 1.5);
 		cout << "Robot position : " << currentPosition << endl;
-		cout << "Mean : " << sum / particlesList.size() << endl;
+		cout << "Mean : " << mean << endl;
 		cout << "Variance : " << abs(currentPosition - (sum / particlesList.size())) << endl;
-		Particle_filter(particlesList, nextStep, heatSensor.read(currentPosition), avg, standardDeviation, currentPosition, arr);
+		Particle_filter(particlesList, nextStep, heatSensor.read(currentPosition), avg, standardDeviation, mean, arr);
 		currentPosition += nextStep;
 	}
 
