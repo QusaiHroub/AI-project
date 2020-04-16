@@ -58,11 +58,9 @@ namespace utilities {
 
 	double getTempForAllPositions(double* arr) {
 		double sum = 0;
-		double theta;
 		int j = 0;
 		for (double i = 0; i < 1; i += 0.001) {
-			theta = i * 2 * PI;
-			arr[j] = cos(theta) + 0.5 * cos(3 * theta + 0.23) + 0.5 * cos(5 * theta - 0.4) + 0.5 * cos(7 * theta + 2.09) + 0.5 * cos(9 * theta - 3);
+			arr[j] = cos(2 * PI * i) + 0.5 * cos((3 * i + 0.23) * 2 * PI) + 0.5 * cos((5 * i - 0.4) * 2 * PI) + 0.5 * cos((7 * i - 2.09) * 2 * PI) + 0.5 * cos((9 * i - 3) * 2 * PI);
 			sum += arr[j];
 			j++;
 		}
