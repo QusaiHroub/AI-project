@@ -11,8 +11,13 @@ private:
     double * m_heatList = nullptr;
     int m_heatListSize;
 
+    //generate small random error for heat senseor using utilities::smallRandomError.
     double randomError();
+
+    //get weighted average for 7 close temperature to position
     double sampling(int);
+
+    //get sampling value with small error.
     double getSampleHeat(int, int);
 
 public:

@@ -11,41 +11,57 @@
 using namespace std;
 
 int main() {
-	vector<Particle> particlesList;//our particles
+
+	//list contain the particles of robot
+	vector<Particle> particlesList;
+
+	//Array Contain the temperature for every point  on robot path
 	double arr[1000] = {};
+
+	// calculate the average of temperature
 	double avg = utilities::getTempForAllPositions(arr);
 	double mean;
-	
+
+	//heat sensor (: to get the temperature
 	HeatSensor heatSensor(arr, 1000);
-	
+
 	int start , stepSize, nextStep;
 	cout << "Enter the start point of rebot : ";
 	cin >> start;
 	cout << "Enter the step length  of rebot : ";
 	cin >> stepSize;
-	
+
 	int  currentPosition = start;
 
 	double standardDeviation = utilities::getStandardDeviation(arr, avg);
 	double numberOfRandomParticles;
 	cout << "Enter the number of particles : ";
 	cin >> numberOfRandomParticles;
-	//to select particles
+
+	//function to  select random particles
 	utilities::getRandomParticles(particlesList, arr, currentPosition, avg, standardDeviation, numberOfRandomParticles);
 	double sum;
 	while (currentPosition < 1000) {
 		sum = 0;
+
+		//print position for all particles.
 		for (unsigned long i = 0; i < particlesList.size(); i++)
 		{
 			cout << "Particle number " << i << " in position : " << particlesList[i].getPosition() << endl;
 			sum += particlesList[i].getPosition();
 		}
-		
+
+		//calc mean value.
 		mean = sum / particlesList.size();
+
+		// add small error on next step.
 		nextStep = stepSize * utilities::smallRnadomError(3, 1.5);
+		
 		cout << "Robot position : " << currentPosition << endl;
 		cout << "Mean : " << mean << endl;
-		cout << "Variance : " << abs(currentPosition - (sum / particlesList.size())) << endl;
+		cout << "Variance : " <<utilities::Variance(mean, particlesList) << endl;
+		
+		//to apply the particle filter algorithm
 		Particle_filter(particlesList, nextStep, heatSensor.read(currentPosition), avg, standardDeviation, mean, arr);
 		currentPosition += nextStep;
 	}
