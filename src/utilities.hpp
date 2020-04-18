@@ -22,6 +22,7 @@ namespace utilities {
     double getTempForAllPositions(double* arr);
     double getStandardDeviation(double arr[], double avg);
     double smallRnadomError(int, double = 1.0);
+    double Variance(double mean, std::vector<Particle> particlesList);
 }
 
 #endif // UTILITIES_HPP
