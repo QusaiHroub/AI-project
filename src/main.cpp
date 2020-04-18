@@ -22,7 +22,7 @@ int main() {
 	double avg = utilities::getTempForAllPositions(arr);
 	double mean;
 
-	//class to keep the temperature
+	//heat sensor (: to get the temperature
 	HeatSensor heatSensor(arr, 1000);
 
 	int start , stepSize, nextStep;
@@ -43,14 +43,20 @@ int main() {
 	double sum;
 	while (currentPosition < 1000) {
 		sum = 0;
+
+		//print position for all particles.
 		for (unsigned long i = 0; i < particlesList.size(); i++)
 		{
 			cout << "Particle number " << i << " in position : " << particlesList[i].getPosition() << endl;
 			sum += particlesList[i].getPosition();
 		}
 
+		//calc mean value.
 		mean = sum / particlesList.size();
+
+		// add small error on next step.
 		nextStep = stepSize * utilities::smallRnadomError(3, 1.5);
+		
 		cout << "Robot position : " << currentPosition << endl;
 		cout << "Mean : " << mean << endl;
 		cout << "Variance : " <<utilities::Variance(mean, particlesList) << endl;

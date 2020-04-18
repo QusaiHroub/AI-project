@@ -25,7 +25,8 @@ private:
     const long double MIN_WEIGHT = 1e-20l;
     long double m_weight;
     int m_position;
-
+    
+    /// generate and used by MapLevel99Plus.
     long double m_l;
     long double m_h;
 };

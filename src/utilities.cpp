@@ -79,6 +79,7 @@ namespace utilities {
 	double smallRnadomError(int n, double factor) {
 		return 1.0 + factor * (utilities::rand() & 1 ? -1 : 1) * ((utilities::rand() % 101) / pow(10, n));
 	}
+	
 	double Variance(double mean, std::vector<Particle> particlesList) {
 		double sum = 0;
 			for (int i = 0; i < particlesList.size(); i++) {
