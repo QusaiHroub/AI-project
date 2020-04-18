@@ -24,12 +24,12 @@ namespace utilities {
 	}
 
 	/**
-	To calculate the weights using gaussian formula 
+	To calculate the weights using gaussian formula
 	*/
 	double weight(double x, double u, double q) {
 		return ((1 / (q * sqrt(2 * PI))) * exp(-1 * pow((x - u), 2) / 2 * pow(q, 2)));
 	}
-	
+
 	/*
 	To normalize the weights
 	**/
@@ -75,8 +75,15 @@ namespace utilities {
 
 		return sum / 1000;
 	}
-	
+
 	double smallRnadomError(int n, double factor) {
 		return 1.0 + factor * (utilities::rand() & 1 ? -1 : 1) * ((utilities::rand() % 101) / pow(10, n));
+	}
+	double Variance(double mean, std::vector<Particle> particlesList) {
+		double sum = 0;
+			for (int i = 0; i < particlesList.size(); i++) {
+				sum += pow(particlesList[i].getPosition() - mean,2);
+			}
+		return sqrt(sum / (particlesList.size() - 1));
 	}
 }

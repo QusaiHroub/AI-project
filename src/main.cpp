@@ -11,19 +11,19 @@
 using namespace std;
 
 int main() {
-	vector<Particle> particlesList;//our particles
-	double arr[1000] = {};
-	double avg = utilities::getTempForAllPositions(arr);
+	vector<Particle> particlesList;//list contain the particles of robot
+	double arr[1000] = {};//Array Contain the temperature for every point  on robot path
+	double avg = utilities::getTempForAllPositions(arr);// calculate the average of temperature
 	double mean;
-	
-	HeatSensor heatSensor(arr, 1000);
-	
+
+	HeatSensor heatSensor(arr, 1000);//class to keep the temperature
+
 	int start , stepSize, nextStep;
 	cout << "Enter the start point of rebot : ";
 	cin >> start;
 	cout << "Enter the step length  of rebot : ";
 	cin >> stepSize;
-	
+
 	int  currentPosition = start;
 
 	double standardDeviation = utilities::getStandardDeviation(arr, avg);
@@ -31,7 +31,7 @@ int main() {
 	cout << "Enter the number of particles : ";
 	cin >> numberOfRandomParticles;
 	//to select particles
-	utilities::getRandomParticles(particlesList, arr, currentPosition, avg, standardDeviation, numberOfRandomParticles);
+	utilities::getRandomParticles(particlesList, arr, currentPosition, avg, standardDeviation, numberOfRandomParticles);//function to  select random particles
 	double sum;
 	while (currentPosition < 1000) {
 		sum = 0;
@@ -40,13 +40,13 @@ int main() {
 			cout << "Particle number " << i << " in position : " << particlesList[i].getPosition() << endl;
 			sum += particlesList[i].getPosition();
 		}
-		
+
 		mean = sum / particlesList.size();
 		nextStep = stepSize * utilities::smallRnadomError(3, 1.5);
 		cout << "Robot position : " << currentPosition << endl;
 		cout << "Mean : " << mean << endl;
-		cout << "Variance : " << abs(currentPosition - (sum / particlesList.size())) << endl;
-		Particle_filter(particlesList, nextStep, heatSensor.read(currentPosition), avg, standardDeviation, mean, arr);
+		cout << "Variance : " <<utilities::Variance(mean, particlesList) << endl;
+		Particle_filter(particlesList, nextStep, heatSensor.read(currentPosition), avg, standardDeviation, mean, arr);//to apply the particle filter algorithm
 		currentPosition += nextStep;
 	}
 
