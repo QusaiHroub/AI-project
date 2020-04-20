@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 
 Window{
     id: root
-    width: 1000
+    width: 1200
     height: 600
     visible: true
 
@@ -16,11 +16,11 @@ Window{
         }
     }
 
-    Column {
+    Row {
         anchors.fill: parent
         Item {
-            width: root.width
-            height: root.height / 2
+            width: 1000
+            height: root.height
 
             Column {
                 anchors.fill: parent
@@ -28,7 +28,7 @@ Window{
                 Canvas {
                     id: mycanvas
 
-                    height: parent.height / 2
+                    height: parent.height * 0.3
 
                     function clear() {
                         var ctx = getContext("2d");
@@ -70,7 +70,7 @@ Window{
                 Canvas {
                     id: mycanvas2
 
-                    height: parent.height / 2
+                    height: parent.height * 0.6
 
                     property real radius: 1
                     property var list : []
@@ -96,28 +96,15 @@ Window{
         }
 
         Item {
-            width: parent.width
-            height: parent.height / 2
+            width: 200
+            height: parent.height
 
-            Row {
-                id: row
+            Column {
                 anchors.fill: parent
-
-                Flickable {
-                    id: flickable
-                    height: parent.height
-                    width: 200
-
-                    TextArea.flickable: TextArea {
-                        id: particlesPositionBox
-                    }
-
-                    ScrollBar.vertical: ScrollBar { }
-                }
 
                 Item {
                     width: 200
-                    height: parent.height
+                    height: parent.height * 0.2
 
                     Column {
                         anchors.fill: parent
@@ -142,6 +129,19 @@ Window{
                         }
                     }
                 }
+
+                Flickable {
+                    id: flickable
+                    height: parent.height * 0.80
+                    width: 200
+
+                    TextArea.flickable: TextArea {
+                        id: particlesPositionBox
+                    }
+
+                    ScrollBar.vertical: ScrollBar { }
+                }
+
             }
         }
     }
