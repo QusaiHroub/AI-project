@@ -16,6 +16,32 @@ Window{
         }
     }
 
+    function nextStep() {
+        if (!qtInterface.isCanMove()) {
+            return;
+        }
+
+        qtInterface.moveOneStep();
+        canvas.clear();
+        canvas.requestPaint();
+    }
+
+    Shortcut {
+        autoRepeat: false
+        sequence: "Return"
+        onActivated: {
+            nextStep();
+        }
+    }
+
+    Shortcut {
+        autoRepeat: false
+        sequence: "Enter"
+        onActivated: {
+            nextStep();
+        }
+    }
+
     Row {
         anchors.fill: parent
         Item {
@@ -26,14 +52,14 @@ Window{
                 anchors.fill: parent
 
                 Canvas {
-                    id: mycanvas
+                    id: canvas
 
                     height: parent.height * 0.3
 
                     function clear() {
                         var ctx = getContext("2d");
                         ctx.reset();
-                        mycanvas.requestPaint();
+                        canvas.requestPaint();
                     }
 
                     property real particleRadius: 3
@@ -60,7 +86,7 @@ Window{
                         }
                         context.restore()
                         printParticlesPostions();
-                        robotPositionLable.text = "Robot is in position: " + qtInterface.getRobotPosition();
+                        robotPositionLable.text = "Robot in position: " + qtInterface.getRobotPosition();
                         let mean = qtInterface.getMeanValue();
                         meanValueLable.text = "Mean Value: " + mean;
                         varianceValueLable.text = "Variance value: " + qtInterface.getVariance(mean);
@@ -68,7 +94,7 @@ Window{
                 }
 
                 Canvas {
-                    id: mycanvas2
+                    id: canvas2
 
                     height: parent.height * 0.6
 
@@ -113,9 +139,8 @@ Window{
                             height: 50
                             text: "Next step"
                             onClicked: {
-                                qtInterface.moveOneStep();
-                                mycanvas.clear();
-                                mycanvas.requestPaint();
+                                enabled = qtInterface.isCanMove();
+                                nextStep();
                             }
                         }
                         Label {
