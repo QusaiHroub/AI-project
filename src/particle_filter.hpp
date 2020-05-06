@@ -15,10 +15,6 @@
 	//determine start point of expected area, that the robot position expected be in. 
     int expectedPosition = 0;
 
-	if (1000 - expectedPosition < 100) {
-		expectedPosition = 900;
-	}
-
 	//List for new particles after random selection.
 	std::vector<Particle> newS;
 

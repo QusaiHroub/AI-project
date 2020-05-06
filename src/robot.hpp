@@ -12,6 +12,7 @@ public:
     int getRobotPosition();
     double getRededHeat();
     int getStepSize();
+    static int getMoveError();
 
 private:
     const int DEFAULT_STEP_LENGTH = 11;

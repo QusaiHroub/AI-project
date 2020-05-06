@@ -33,9 +33,9 @@ void QtInterface::moveOneStep() {
     }
 
     m_robot->move();
-    Particle_filter(m_particlesList, m_robot->getLastStepSize(), m_robot->getRededHeat(), m_avg, m_standardDeviation, getMeanValue(), m_heatList);
+    Particle_filter(m_particlesList, m_robot->getStepSize(), m_robot->getRededHeat(), m_avg, m_standardDeviation, m_robot->getMoveError, m_heatList);
 
-    if (m_robot->getRobotPosition() + m_robot->getStepSize() * 1.2 >= 1000) {
+    if (m_robot->getRobotPosition() + m_robot->getStepSize() + 13 >= 1000) {
         m_isCanMove = false;
     }
 }
