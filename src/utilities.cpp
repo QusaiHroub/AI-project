@@ -82,7 +82,7 @@ namespace utilities {
 	
 	double Variance(double mean, std::vector<Particle> particlesList) {
 		double sum = 0;
-			for (int i = 0; i < particlesList.size(); i++) {
+			for (unsigned long i = 0; i < particlesList.size(); i++) {
 				sum += pow(particlesList[i].getPosition() - mean,2);
 			}
 		return sqrt(sum / (particlesList.size() - 1));

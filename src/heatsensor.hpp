@@ -5,8 +5,8 @@
 
 class HeatSensor {
 private:
-    const int WEIGHT_LIST_SIZE = 4;
-    const int WEIGHT_LIST[4] = {60, 22, 12, 6};
+    const int WEIGHT_LIST_SIZE = 5;
+    const int WEIGHT_LIST[5] = {45, 27, 17, 7, 4};
 
     double * m_heatList = nullptr;
     int m_heatListSize;

@@ -10,13 +10,10 @@
 
 
 // particle filter 
- void Particle_filter(std::vector<Particle>& particlesList, int U, double Z, double avg, double standardDeviation, int mean, double arr[]) {
+ void Particle_filter(std::vector<Particle>& particlesList, int U, double Z, double avg, double standardDeviation, int (*error)(), double arr[]) {
 	
 	//determine start point of expected area, that the robot position expected be in. 
-	int expectedPosition = mean - (1000 - mean);
-	if (expectedPosition < 0) {
-		expectedPosition = 0;
-	}
+    int expectedPosition = 0;
 
 	//List for new particles after random selection.
 	std::vector<Particle> newS;
@@ -27,13 +24,13 @@
 
 	double weightSum = 0;
 	for (unsigned long i = 0; i < particlesList.size(); i++) {
-
+        int err = error();
 		//select random particle.
 		Particle randomParticle = Particle(&utilities::getRandomParticle(map));
-		if (randomParticle.getPosition() + U >= 1000) {
+        if (randomParticle.getPosition() + U + err >= 1000) {
 			randomParticle.setPosition((rand() % (1000 - expectedPosition)) + expectedPosition);
 		} else {
-			randomParticle.setPosition(randomParticle.getPosition() + U);
+            randomParticle.setPosition(randomParticle.getPosition() + U + err);
 		}
 
 		//update particle weight.
