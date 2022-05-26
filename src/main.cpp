@@ -1,22 +1,21 @@
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
 
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+
 #include "particle.hpp"
-#include "particle_filter.hpp"
 #include "utilities.hpp"
-#include "heatsensor.hpp"
+#include "robot.hpp"
+#include "qtinterface.hpp"
 
 using namespace std;
 
-int readInt(int &);
-int getRobotMoveError();
-
-int main() {
-
-    const int DEFAULT_STEP_LENGTH = 11;
-    const int DEFAULT_START_POSITION = 13;
+int main(int argc, char *argv[]) {
     const int DEFAULT_PARTICLES_NUMBER = 45;
 
     //list contain the particles of robot
@@ -25,73 +24,33 @@ int main() {
     //Array Contain the temperature for every point  on robot path
     double arr[1000] = {};
 
+    Robot robot(arr, 1000);
+
     // calculate the average of temperature
     double avg = utilities::getTempForAllPositions(arr);
-    double mean;
-
-    //heat sensor (: to get the temperature
-    HeatSensor heatSensor(arr, 1000);
-
-    int start = DEFAULT_START_POSITION, stepSize = DEFAULT_STEP_LENGTH, nextStep;
-
-    cout << "Enter the start point of rebot (default = " << DEFAULT_START_POSITION << ") : ";
-    while (readInt(start)) {
-        cout << "Invalid integer. Try again (default = " << DEFAULT_START_POSITION << ") : ";
-    }
-
-    cout << "Enter the step length  of rebot (default = " << DEFAULT_STEP_LENGTH << ") : ";
-    while (readInt(stepSize)) {
-        cout << "Invalid integer. Try again (default = " << DEFAULT_STEP_LENGTH << ") : ";
-    }
-
-    int  currentPosition = start;
 
     double standardDeviation = utilities::getStandardDeviation(arr, avg);
     int numberOfRandomParticles = DEFAULT_PARTICLES_NUMBER;
+	
+	//function to  select random particles
+    utilities::getRandomParticles(particlesList, arr, robot.getRobotPosition(), avg, standardDeviation, numberOfRandomParticles);
 
-    cout << "Enter the number of particles (default = " << DEFAULT_PARTICLES_NUMBER << ") : ";
-    while (readInt(numberOfRandomParticles)) {
-        cout << "Invalid integer. Try again (default = " << DEFAULT_PARTICLES_NUMBER << ") : ";
-    }
+    QtInterface qtInterface(arr, 1000, &robot, particlesList, avg, standardDeviation);
 
-    //function to  select random particles
-    utilities::getRandomParticles(particlesList, arr, currentPosition, avg, standardDeviation, numberOfRandomParticles);
-    double sum;
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    while (cout << "press enter to continue ... ", nextStep = stepSize + getRobotMoveError(),currentPosition = currentPosition + nextStep, currentPosition  < 1000 && cin.get() == '\n') {
-        sum = 0;
+    QGuiApplication app(argc, argv);
 
-        //print position for all particles.
-        for (unsigned long i = 0; i < particlesList.size(); i++)
-        {
-            cout << "Particle number " << i << " in position : " << particlesList[i].getPosition() << endl;
-            sum += particlesList[i].getPosition();
-        }
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+    engine.load(url);
 
-        //calc mean value.
-        mean = sum / particlesList.size();
+    engine.rootContext()->setContextProperty("qtInterface", &qtInterface);
 
-
-        cout << "Robot position : " << currentPosition << endl;
-        cout << "Mean : " << mean << endl;
-        cout << "Variance : " <<utilities::Variance(mean, particlesList) << endl;
-        //to apply the particle filter algorithm
-        Particle_filter(particlesList, nextStep, heatSensor.read(currentPosition), avg, standardDeviation, getRobotMoveError, arr);
-    }
-
-    return 0;
-}
-
-int readInt(int &inputRef) {
-    string input;
-
-    getline(cin, input);
-    if (!input.empty() && !(stringstream(input) >> inputRef)) {
-        return -1;
-    }
-    return 0;
-}
-
-int getRobotMoveError() {
-    return 10 * utilities::smallRnadomError(3, 2.5) - 10;
+    return app.exec();
 }
